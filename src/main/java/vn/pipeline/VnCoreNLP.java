@@ -35,15 +35,15 @@ public class VnCoreNLP {
     public void initAnnotators(String[] annotators) throws IOException{
         for(String annotator : annotators) {
             switch (annotator.trim()) {
-                case "parse":
-                    this.dependencyParser = DependencyParser.initialize();
-                    break;
-                case "ner":
-                    this.nerRecognizer = NerRecognizer.initialize();
-                    break;
-                case "pos":
-                    this.posTagger = PosTagger.initialize();
-                    break;
+//                case "parse":
+//                    this.dependencyParser = DependencyParser.initialize();
+//                    break;
+//                case "ner":
+//                    this.nerRecognizer = NerRecognizer.initialize();
+//                    break;
+//                case "pos":
+//                    this.posTagger = PosTagger.initialize();
+//                    break;
                 case "wseg":
                     this.wordSegmenter = WordSegmenter.initialize();
                     break;

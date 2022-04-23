@@ -6,9 +6,9 @@ import marmot.morph.Word;
 
 import marmot.util.FileUtils;
 import org.apache.log4j.Logger;
+import vn.corenlp.wordsegmenter.Vocabulary;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -20,8 +20,19 @@ public class PosTagger {
     public PosTagger() throws IOException {
         LOGGER.info("Loading POS Tagging model");
         String modelPath = "models/postagger/vi-tagger";
-        if (!new File(modelPath).exists()) throw new IOException("PosTagger: " + modelPath + " is not found!");
-        tagger = FileUtils.loadFromFile(modelPath);
+
+        ClassLoader classLoader = Vocabulary.class.getClassLoader();
+        InputStream inputStream = classLoader.getResourceAsStream(modelPath);
+
+        if (inputStream == null) {
+            throw new IOException("PosTagger: " + modelPath + " is not found!");
+        }
+        ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+        try {
+            tagger = (MorphTagger) objectInputStream.readObject();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
     }
 
